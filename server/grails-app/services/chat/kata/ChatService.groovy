@@ -46,14 +46,16 @@ class ChatService {
 				collector.add(allMessages[currentMess])
 				currentMess++
 			}
-			
+
+		}catch (Exception e) {
+			log.error("Exception: " + e.toString())
 		}finally{
+		
 			/* Si se produce una excepción desbloqueamos la lectura */
 			r.unlock()
-			log.error("Exception: " + e.toString())
+
 		}
-		
-		r.unlock()
+
 		
 		currentMess--
 		return currentMess
