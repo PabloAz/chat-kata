@@ -39,9 +39,18 @@ class ChatService {
 		
 		r.lock()
 		
-		while(currentMess < allMessages.size()){
-			collector.add(allMessages[currentMess])
-			currentMess++
+		
+		try{
+		
+			while(currentMess < allMessages.size()){
+				collector.add(allMessages[currentMess])
+				currentMess++
+			}
+			
+		}finally{
+			/* Si se produce una excepción desbloqueamos la lectura */
+			r.unlock()
+			log.error("Exception: " + e.toString())
 		}
 		
 		r.unlock()
@@ -62,7 +71,6 @@ class ChatService {
 		
 		/* Antes de escribir bloqueamos la lectura y la escritura */
 		w.lock()
-		//r.lock()
 		
 		try{
 			
@@ -71,7 +79,6 @@ class ChatService {
 		}finally{
 		
 			w.unlock()
-			//r.unlock()
 		
 		}
 	}
