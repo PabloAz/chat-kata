@@ -27,26 +27,45 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		
 		Button btnLogin =(Button) findViewById(R.id.button1);
-		final EditText name = (EditText) findViewById(R.id.editText1);
+		final EditText name = (EditText) findViewById(R.id.editText2);
+		final EditText ip = (EditText) findViewById(R.id.editText1);
+		
+		
 		
 		btnLogin.setOnClickListener(new Button.OnClickListener() {  
 	        public void onClick(View v){
-	        	/* Almacenamos el nombre del usuario */
 	        	
-	        	String nameText = name.getText().toString();
+	        	/* Controlamos que los campos no estén vacios */
+	        	if(name.getText().toString().equals("")){
+	        		Toast toast1 = Toast.makeText(getApplicationContext(),"You must specify a name!", Toast.LENGTH_SHORT);
+	        	    toast1.show();
+	        	}
 	        	
-	        	SharedPreferences settings = getSharedPreferences("perfil", MODE_PRIVATE);
-	        	SharedPreferences.Editor editor = settings.edit();
-	        	editor.putString("user",nameText);
-	        	editor.commit();
+	        	else if(ip.getText().toString().equals("")){
+	        		Toast toast1 = Toast.makeText(getApplicationContext(),"You must specify an IP!", Toast.LENGTH_SHORT);
+	        	    toast1.show();
+	        	}
 	        	
-	        	Intent inten = new Intent(LoginActivity.this, ChatActivity.class);
-	        	startActivity(inten);
+	        	else{
 	        	
-	        	//Toast notificacionToast=Toast.makeText(getApplicationContext(),settings.getString("user", "No existe"),Toast.LENGTH_SHORT);
-	    		//snotificacionToast.show();
+	        		String nameText = name.getText().toString();
+	        		String ipText = ip.getText().toString();
+	        	
+	        		SharedPreferences settings = getSharedPreferences("perfil", MODE_PRIVATE);
+	        		SharedPreferences.Editor editor = settings.edit();
+	        		editor.putString("user",nameText);
+	        		editor.putString("ip", ipText);
+	        		editor.commit();
+	        	
+	        		Intent inten = new Intent(LoginActivity.this, ChatActivity.class);
+	        		startActivity(inten);
+	        	
+	        	}
+	        	
 	        }
 	    });
+		
+		
 			
 	}
 
